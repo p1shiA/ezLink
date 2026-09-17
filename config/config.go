@@ -14,7 +14,7 @@ type BotConfig struct {
 }
 
 type DbConfig struct {
-	DbUrl string `envconfig:"DB_URL" required:"true"`
+	DbUrl string `envconfig:"DATABASE_URL" required:"true"`
 }
 
 type LogConfig struct {
