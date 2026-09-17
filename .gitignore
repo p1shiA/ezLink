@@ -1,0 +1,19 @@
+# ── Secrets: NEVER commit ──
+.env
+.env.local
+.env.*.local
+
+# ── Go build output ──
+/bin/
+*.exe
+*.test
+*.out
+
+# ── Logs (your LOG_FILE default writes here) ──
+logs/
+*.log
+
+# ── IDE / OS junk ──
+.idea/
+.vscode/
+.DS_Store
