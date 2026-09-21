@@ -14,6 +14,7 @@ func Run(cfg *config.Config) (*gotgproto.Client, error) {
 		gotgproto.ClientTypeBot(cfg.Token),
 		&gotgproto.ClientOpts{
 			Session: sessionMaker.SqlSession(sqlite.Open("ezlink.db")),
+			DisableCopyright: true,
 		},
 	)
 

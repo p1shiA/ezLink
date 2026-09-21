@@ -23,13 +23,18 @@ func main() {
 	defer log.Sync()
 
 	log.Info("Starting the bot")
-	bot, err := bot.Run(cfg)
+	client, err := bot.Run(cfg)
 	if err != nil {
 		log.Fatal("Failed to start the bot", zap.Error(err))
 	}
-	
-	log.Info("Bot started successfully", zap.String("bot_name", bot.Self.FirstName))
-	bot.Idle()
+
+	bh := bot.NewBotHandler(client, log)
+	bot.RegisterBotHandlers(bh)
+
+	log.Info("Bot started successfully", zap.String("bot_name", client.Self.FirstName))
+
+
+	client.Idle()
 
 
 }
