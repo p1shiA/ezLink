@@ -1,13 +1,11 @@
-package bot
+package handlers
 
 import (
-	"fmt"
-
 	"github.com/celestix/gotgproto"
 	"github.com/celestix/gotgproto/dispatcher"
 	"github.com/celestix/gotgproto/dispatcher/handlers"
+	"github.com/celestix/gotgproto/dispatcher/handlers/filters"
 	"github.com/celestix/gotgproto/ext"
-	"github.com/gotd/td/telegram/message/markup"
 	"go.uber.org/zap"
 )
 
@@ -32,24 +30,13 @@ func RegisterBotHandlers(bh *BotHandler) {
 		return dispatcher.ContinueGroups
 	}), -1)
 
-	bh.dp.AddHandler(handlers.NewCommand("start", bh.onStart))
+	bh.dp.AddHandler(handlers.NewCommand("start", bh.onStartCommand))
+	bh.dp.AddHandler(handlers.NewCommand("help", bh.onHelpCommand))
+
+	bh.dp.AddHandler(handlers.NewMessage(filters.Message.Text, bh.onMenuTap))
 	
 }
 
 
-func (bh *BotHandler) onStart (ctx *ext.Context, u *ext.Update) error {
-	user := u.EffectiveUser().FirstName
 
-	message := fmt.Sprintf("welcome %s", user)
-
-	_, err := ctx.Reply(u, ext.ReplyTextString(message), &ext.ReplyOpts{
-		Markup: markup.BuildKeyboard().Resize().Build(
-			markup.Row(markup.Button("Test 1")),
-			markup.Row(markup.Button("Test 2")),
-		),
-	})
-
-	bh.logger.Info("onStart Handler", zap.String("User", user))
-	return err
-}
 

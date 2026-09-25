@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/p1shiA/ezLink/config"
+	"github.com/p1shiA/ezLink/internal/bot/handlers"
 	"github.com/p1shiA/ezLink/internal/bot"
 	"github.com/p1shiA/ezLink/internal/utils"
 	"go.uber.org/zap"
@@ -28,8 +29,8 @@ func main() {
 		log.Fatal("Failed to start the bot", zap.Error(err))
 	}
 
-	bh := bot.NewBotHandler(client, log)
-	bot.RegisterBotHandlers(bh)
+	bh := handlers.NewBotHandler(client, log)
+	handlers.RegisterBotHandlers(bh)
 
 	log.Info("Bot started successfully", zap.String("bot_name", client.Self.FirstName))
 
