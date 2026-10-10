@@ -27,10 +27,22 @@ type LogConfig struct {
 }
 
 
+type ServerConfig struct {
+	Port string `envconfig:"SERVER_PORT" default:"8080"`
+}
+
+type PaymentConfig struct {
+	MerchantID  string `envconfig:"ZARINPAL_MERCHANT_ID" default:""`
+	CallbackURL string `envconfig:"ZARINPAL_CALLBACK_URL" default:"http://localhost:8080/payment/callback"`
+	Sandbox     bool   `envconfig:"ZARINPAL_SANDBOX" default:"true"`
+}
+
 type Config struct {
 	BotConfig
 	DbConfig
 	LogConfig
+	ServerConfig
+	PaymentConfig
 }
 
 func LoadConfig() (*Config, error) {

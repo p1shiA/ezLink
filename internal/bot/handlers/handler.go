@@ -6,18 +6,30 @@ import (
 	"github.com/celestix/gotgproto/dispatcher/handlers"
 	"github.com/celestix/gotgproto/dispatcher/handlers/filters"
 	"github.com/celestix/gotgproto/ext"
+	"github.com/p1shiA/ezLink/internal/core/domain"
 	"go.uber.org/zap"
 )
 
-type BotHandler struct {
-	dp dispatcher.Dispatcher
-	logger *zap.Logger
+type Services struct {
+	User         domain.UserService
+	Plan         domain.PlanService
+	Subscription domain.SubscriptionService
+	Transaction  domain.TransactionService
+	FileLog      domain.FileLogService
+	Admin        domain.AdminService
 }
 
-func NewBotHandler(client *gotgproto.Client, logger *zap.Logger) *BotHandler {
+type BotHandler struct {
+	dp       dispatcher.Dispatcher
+	services *Services
+	logger   *zap.Logger
+}
+
+func NewBotHandler(client *gotgproto.Client, services *Services, logger *zap.Logger) *BotHandler {
 	return &BotHandler{
-		dp: client.Dispatcher,
-		logger: logger.Named("Bot Handler"),
+		dp:       client.Dispatcher,
+		services: services,
+		logger:   logger.Named("Bot Handler"),
 	}
 }
 
@@ -32,6 +44,9 @@ func RegisterBotHandlers(bh *BotHandler) {
 
 	bh.dp.AddHandler(handlers.NewCommand("start", bh.onStartCommand))
 	bh.dp.AddHandler(handlers.NewCommand("help", bh.onHelpCommand))
+	bh.dp.AddHandler(handlers.NewCommand("profile", bh.onProfileCommand))
+	bh.dp.AddHandler(handlers.NewCommand("plans", bh.onPlansCommand))
+	bh.dp.AddHandler(handlers.NewCommand("extra", bh.onExtraCommand))
 
 	bh.dp.AddHandler(handlers.NewMessage(filters.Message.Text, bh.onMenuTap))
 	

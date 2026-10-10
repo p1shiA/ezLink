@@ -2,6 +2,7 @@ package messages
 
 import "fmt"
 
+// Welcome returns the greeting message displayed when a user starts the bot.
 func Welcome(firstName string) string {
 	return fmt.Sprintf(
 		"سلام %s عزیز! 👋\nبرای شروع، یک فایل ارسال کن.\nبرای راهنمایی، دستور /help رو بزن یا از منوی زیر یکی از دکمه‌ها رو انتخاب کن.",
@@ -10,7 +11,7 @@ func Welcome(firstName string) string {
 }
 
 
-// main menu buttons text
+// Main menu button labels.
 const (
 	BtnBuySubscription = "🛍️ خرید اشتراک"
 	BtnBuyExtraTraffic = "➕ خرید ترافیک اضاف"
@@ -18,6 +19,7 @@ const (
 	BtnSupport = "📞 پشتیبانی و راهنما"
 )
 
+// Help contains the text response for the /help command.
 const Help = `
 📖 *راهنمای استفاده از ربات*
 
@@ -40,7 +42,7 @@ const Help = `
 - بسته‌های ترافیک اضافی را ببینید
 - ترافیک به پلن فعلی اضافه کنید
 
-⚡️ *نکات مهم:*
+*⚡️ نکات مهم:*
 - هر روز یک پلن رایگان ۲ گیگابایتی دریافت می‌کنید.
 - خرید ترافیک اضافی تنها روی پلن‌های پولی امکان‌پذیر است.
 - ترافیک اضافی خریداری‌شده فقط تا زمان پایان پلن فعال شما اعتبار دارد.
