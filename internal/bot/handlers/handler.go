@@ -48,8 +48,14 @@ func RegisterBotHandlers(bh *BotHandler) {
 	bh.dp.AddHandler(handlers.NewCommand("plans", bh.onPlansCommand))
 	bh.dp.AddHandler(handlers.NewCommand("extra", bh.onExtraCommand))
 
+	// Reply menu button text taps
 	bh.dp.AddHandler(handlers.NewMessage(filters.Message.Text, bh.onMenuTap))
-	
+
+	// Media file messages (documents, videos, audio, photos)
+	bh.dp.AddHandler(handlers.NewMessage(filters.Message.Media, bh.onMediaMessage))
+
+	// Inline keyboard callback queries
+	bh.dp.AddHandler(handlers.NewCallbackQuery(filters.CallbackQuery.All, bh.onCallbackQuery))
 }
 
 
